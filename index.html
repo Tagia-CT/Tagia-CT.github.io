@@ -1,90 +1,489 @@
+<!-- 
+  Portofolio Mahasiswa Sistem Informasi - TEMA DARK MODE & GRADIENT
+  Struktur Proyek: Galeri Horizontal Scrollable per Kategori
+  Fokus: Layout Lapang, Narasi Kuat, dan Keahlian Game Dev
+  Teknologi: HTML5, Tailwind CSS, Font Awesome
+-->
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laman Latihan Deployment - Tawarikh Anggia</title>
+    <title>Portofolio SI - T.A.C</title>
+    
+    <!-- Memuat Tailwind CSS & Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
     <style>
-        /* CSS dasar untuk tampilan */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            margin: auto;
-        }
-        h1 {
-            color: #e0b012; /* Warna khas Atma Jaya */
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-        .profile-section {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .profile-img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 20px;
-            border: 3px solid #2a61a8;
-        }
-        .data-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .data-list li {
-            margin-bottom: 10px;
-        }
-        .data-list strong {
-            display: inline-block;
-            width: 120px;
-        }
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #0f172a; /* Slate 900 - Dark Background */
+        color: #f1f5f9; /* Slate 100 - Light Text */
+        scroll-behavior: smooth;
+      }
+      
+      /* Definisi Gradien Neon/Vibrant */
+      .bg-gradient-neon {
+          background-image: linear-gradient(to right, #6366f1, #a855f7); /* Indigo ke Violet */
+      }
+      .text-gradient-neon {
+          background-clip: text;
+          -webkit-background-clip: text;
+          color: transparent;
+          background-image: linear-gradient(to right, #818cf8, #c4b5fd);
+      }
+      .border-gradient-dev { border-color: #6366f1; } /* Indigo */
+      .border-gradient-ai { border-color: #34d399; } /* Emerald */
+      .border-gradient-game { border-color: #f472b6; } /* Pink */
+
+      /* Styling untuk area horizontal scroll */
+      .horizontal-scroll-container {
+        display: flex;
+        overflow-x: scroll;
+        padding-bottom: 20px; 
+        scroll-snap-type: x mandatory;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .horizontal-scroll-container::-webkit-scrollbar {
+        display: none;
+      }
+      
+      .project-card {
+        flex-shrink: 0; 
+        width: 320px; 
+        scroll-snap-align: start; 
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        margin-right: 24px;
+        background-color: #1e293b; /* Slate 800 - Card Background */
+      }
+      .project-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 0 30px rgba(100, 100, 255, 0.5); /* Glowing effect */
+      }
+      
+      .project-description {
+          height: 90px;
+          overflow: hidden;
+          line-height: 1.5;
+          mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+          color: #94a3b8; /* Slate 400 */
+      }
+      
+      .media-preview {
+          /* Rasio 16:9 */
+          aspect-ratio: 16 / 9;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          font-size: 0.8rem;
+          color: #cbd5e1; /* Gray 300 */
+      }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Halo! Saya Tawarikh Anggia</h1>
-        
-        <div class="profile-section">
-            
-            <img src="foto/tawarikh.png" alt="Foto Profil Tawarikh Anggia" class="profile-img">
-            <div>
-                <p>Selamat datang di laman latihan deployment saya.</p>
+    <!-- 1. Header & Navigasi Sticky -->
+    <header class="sticky top-0 z-50 bg-gray-900/90 backdrop-blur-sm shadow-xl">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-extrabold text-gradient-neon">
+                Tawarikh Anggia Cristopher
+            </h1>
+            <!-- Navigasi untuk Desktop -->
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="#about" class="text-gray-300 hover:text-indigo-400 transition duration-300">Tentang</a>
+                <a href="#skills" class="text-gray-300 hover:text-indigo-400 transition duration-300">Keahlian</a>
+                <a href="#projects-dev" class="text-gray-300 hover:text-indigo-400 transition duration-300">Proyek</a>
+                <a href="#experience" class="text-gray-300 hover:text-indigo-400 transition duration-300">Pengalaman</a>
+                <a href="#contact" class="text-gray-300 hover:text-indigo-400 transition duration-300">Kontak</a>
             </div>
+        </nav>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- 2. Bagian Hero/Pengantar -->
+        <section id="hero" class="py-24 sm:py-32 text-center">
+            <div class="max-w-5xl mx-auto">
+
+                <div class="mb-8 flex justify-center">
+                    <img src="/galeri/Foto1.png" onerror="this.onerror=null; this.src='https://placehold.co/150x150/1e293b/94a3b8?text=Foto%20Profil';" 
+                         alt="Foto Profil Tawarikh Anggia Cristopher" 
+                         class="w-36 h-36 object-cover rounded-full border-4 border-indigo-500 shadow-xl"
+                         style="box-shadow: 0 0 25px rgba(99, 102, 241, 0.6);"> 
+                </div>
+
+                <p class="text-lg text-indigo-400 mb-2 font-semibold">Halo, Saya Tawarikh Anggia Cristopher</p>
+                <h2 class="text-5xl sm:text-7xl font-extrabold text-white mb-6 leading-tight">
+                    <span class="text-gradient-neon">System Analyst</span> & Logic Developer
+                </h2>
+                <p class="text-xl text-gray-400 mb-10 max-w-3xl mx-auto">
+                    Menciptakan solusi berbasis logika terapan, dari perencanaan UML hingga implementasi Python/Java yang efisien.
+                </p>
+                <a href="#projects-dev" class="bg-gradient-neon hover:opacity-90 text-white font-bold py-3 px-10 rounded-full shadow-lg transition duration-300 transform hover:scale-[1.02] inline-block">
+                    Jelajahi Proyek Kritis
+                </a>
+            </div>
+        </section>
+
+        <!-- 3. Bagian Tentang Saya -->
+        <section id="about" class="py-16 bg-gray-800 rounded-2xl shadow-2xl mb-16 px-8 sm:px-12 border-t border-gray-700">
+            <div class="max-w-4xl mx-auto">
+                <h3 class="text-3xl font-bold text-white mb-6 border-l-4 border-indigo-400 pl-3">
+                    Tentang Saya
+                </h3>
+                <p class="text-lg text-gray-300 leading-relaxed mb-4">
+                    Saya adalah mahasiswa Sistem Informasi tahun ke dua yang bersemangat dalam menggali potensi sistem, dari perencanaan arsitektur sistem (UML/ERD), hingga implementasi kode yang efisien. Saya fokus pada <strong>Business Analysis</strong> untuk mendefinisikan masalah sebelum melakukan <strong>coding</strong>.
+                </p>
+                <p class="text-lg text-gray-300 leading-relaxed">
+                    Keunggulan saya terletak pada kemampuan untuk <strong>menjembatani kebutuhan bisnis</strong> dengan <strong>arsitektur teknologi yang tepat</strong>. Penguasaan pada <strong>System Modeling</strong> memastikan solusi yang stabil sebelum <strong>coding</strong> dimulai. Pengalaman mencakup pengembangan web <strong>full-stack</strong> (Python/JavaScript) dan penerapan logika kompleks, termasuk model AI dan <strong>Game Logic</strong> (C#).
+                </p>
+            </div>
+        </section>
+        
+        <!-- 4. Bagian Keahlian (Skills) -->
+        <section id="skills" class="py-16">
+            <h3 class="text-3xl font-bold text-white mb-12 text-center">
+                Tech Stack & Core Expertise
+            </h3>
+            <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Skill Block 1: System Development (Stack Web/Mobile EJS & Java/XML) -->
+                <div class="bg-gray-800 p-8 rounded-2xl shadow-xl border-t-4 border-indigo-500 hover:shadow-indigo-500/30 transition duration-300">
+                    <div class="text-indigo-400 mb-3"><i class="fas fa-laptop-code fa-2x"></i></div>
+                    <h4 class="text-2xl font-bold text-white mb-3">System Development</h4>
+                    <p class="text-gray-400 mb-4">
+                        Keahlian dalam membangun solusi end-to-end dengan fokus pada arsitektur server-side dan templating Fungsional.
+                    </p>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li class="flex items-center"><i class="fas fa-angle-right mr-2 text-indigo-400"></i> Backend: JavaScript (Node.js), Java, Python</li>
+                        <li class="flex items-center"><i class="fas fa-angle-right mr-2 text-indigo-400"></i> Web Frontend: EJS (Embedded JS), HTML/CSS, Tailwind CSS</li>
+                        <li class="flex items-center"><i class="fas fa-angle-right mr-2 text-indigo-400"></i> Mobile Native: Java (Backend) & XML (Frontend)</li>
+                    </ul>
+                </div>
+
+                <!-- Skill Block 2: Data Science & Engineering -->
+                <div class="bg-gray-800 p-8 rounded-2xl shadow-xl border-t-4 border-emerald-500 hover:shadow-emerald-500/30 transition duration-300">
+                    <div class="text-emerald-400 mb-3"><i class="fas fa-database fa-2x"></i></div>
+                    <h4 class="text-2xl font-bold text-white mb-3">Data Science & Engineering</h4>
+                    <p class="text-gray-400 mb-4">
+                        Kemampuan memodelkan data, mengimplementasikan model AI, dan mengelola struktur basis data (RDBMS & NoSQL).
+                    </p>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li class="flex items-center"><i class="fas fa-angle-right mr-2 text-emerald-400"></i> Machine Learning: TensorFlow/Keras, YOLO</li>
+                        <li class="flex items-center"><i class="fas fa-angle-right mr-2 text-emerald-400"></i> Databases: MySQL (RDBMS), MongoDB (NoSQL)</li>
+                        <li class="flex items-center"><i class="fas fa-angle-right mr-2 text-emerald-400"></i> Data Analysis: Python (Pandas/Scikit), SQL Queries</li>
+                    </ul>
+                </div>
+
+                <!-- Skill Block 3: System Logic & Creative Analysis -->
+                <div class="bg-gray-800 p-8 rounded-2xl shadow-xl border-t-4 border-pink-500 hover:shadow-pink-500/30 transition duration-300">
+                    <div class="text-pink-400 mb-3"><i class="fas fa-cogs fa-2x"></i></div>
+                    <h4 class="text-2xl font-bold text-white mb-3">System Logic & Creative Analysis</h4>
+                    <p class="text-gray-400 mb-4">
+                        Fokus pada perancangan arsitektur sistem, logika OOP yang ketat, dan manajemen versi kode.
+                    </p>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li class="flex items-center"><i class="fas fa-angle-right mr-2 text-pink-400"></i> Modeling & Design: UML (Use Case & Activity), ERD, Flowcharts</li>
+                        <li class="flex items-center"><i class="fas fa-angle-right mr-2 text-pink-400"></i> Game/Logic: Unity Engine, OOP Principles, C#</li>
+                        <li class="flex items-center"><i class="fas fa-angle-right mr-2 text-pink-400"></i> Tools & IDEs: VSCode, Android Studio, Unity</li>
+                        <li class="flex items-center"><i class="fas fa-angle-right mr-2 text-pink-400"></i> Version Control: Git & GitHub</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 5. Kategori Proyek 1: Application Development -->
+        <section id="projects-dev" class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h3 class="text-3xl font-bold text-indigo-400 mb-4 flex items-center">
+                    <i class="fas fa-code mr-3"></i> 
+                    1. Application Development
+                </h3>
+                <p class="text-gray-400 mb-8">
+                    Proyek full-stack yang berfokus pada arsitektur sistem, efisiensi, dan fungsionalitas. (Scroll ke kanan)
+                </p>
+            </div>
+
+            <!-- Horizontal Scroll Container -->
+            <div class="horizontal-scroll-container space-x-6">
+                
+                <!-- CARD DEV 1: APLIKASI SAW.IT (PROJECT FINAL) -->
+                <div class="project-card rounded-xl shadow-2xl border-t-4 border-indigo-500">
+                    <div class="media-preview rounded-t-xl bg-gray-800/80">
+                        <!-- LOKASI GAMBAR SAW.IT -->
+                        <img src="saw.it.png" onerror="this.onerror=null; this.src='https://placehold.co/320x180/0f172a/6366f1?text=Preview%20Saw.It%20Mobile';" 
+                             alt="Preview Aplikasi Saw.It" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-semibold uppercase text-indigo-300 bg-indigo-900/50 px-2 py-1 rounded">Mobile App | System Analysis</span>
+                        <h4 class="text-xl font-bold text-white my-2">Saw.It: Pencatatan Keuangan Sawit</h4>
+                        <p class="text-sm text-gray-500 mb-2">
+                            Teknologi: <strong>Java (Android Studio)</strong>, <strong>XML</strong>, <strong>SQLite</strong>
+                        </p>
+                        <p class="mb-4 project-description">
+                            <strong>Masalah:</strong> Usaha kecil sawit di pedalaman kesulitan mencatat keuangan (manual/buta komputer) karena keterbatasan akses internet.
+                            <br>
+                            <strong>Solusi:</strong> Memimpin tim dalam merancang (<strong>UML & Activity Diagram</strong>) dan mengembangkan aplikasi offline Mobile Native dengan UI icon-heavy yang sesuai target pasar.
+                            <br>
+                            <strong>Dampak (Estimasi):</strong> Mengurangi waktu pencatatan transaksi hingga <strong>70%</strong> (dari 5 menit menjadi ~1.5 menit) dan mengurangi risiko human error dalam perhitungan data keuangan.
+                        </p>
+                        <!-- Tombol Aksi: Link ke Kode dan Link ke Demo/APK -->
+                        <div class="flex space-x-3 mt-4">
+                            <a href="https://github.com/Tagia-CT/Saw.It" target="_blank" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold py-2 rounded transition duration-300 text-center">
+                                <i class="fab fa-github mr-1"></i> Lihat Kode
+                            </a>
+                            <a href="https://github.com/Tagia-CT/Saw.lt/releases/download/V1.3/Saw.It.apk" target="_blank" class="flex-1 bg-gray-600 hover:bg-gray-500 text-white text-sm font-semibold py-2 rounded transition duration-300 text-center">
+                                <i class="fas fa-download mr-1"></i> Unduh APK Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD DEV 2: WEB HUNION (PROJECT FINAL) -->
+                <div class="project-card rounded-xl shadow-2xl border-t-4 border-indigo-500">
+                    <div class="media-preview rounded-t-xl bg-gray-800/80">
+                        <!-- LOKASI GAMBAR HUNION -->
+                        <img src="hunion.png" onerror="this.onerror=null; this.src='https://placehold.co/320x180/0f172a/6366f1?text=Preview%20Web%20Hunion';" 
+                             alt="Preview Aplikasi Hunion" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-semibold uppercase text-indigo-300 bg-indigo-900/50 px-2 py-1 rounded">Web App | AI Integration</span>
+                        <h4 class="text-xl font-bold text-white my-2">Web Hunion: Manajemen Hunian dengan AI</h4>
+                        <p class="text-sm text-gray-500 mb-2">
+                            Teknologi: <strong>Node.js</strong>, <strong>EJS</strong>, <strong>MongoDB</strong>, <strong>Gemini API</strong>
+                        </p>
+                        <p class="mb-4 project-description">
+                            <strong>Masalah:</strong> Data penyewa, pembayaran, dan unit kosong tersebar, menyebabkan kekacauan data dan sulitnya analisis.
+                            <br>
+                            <strong>Solusi:</strong> Mengembangkan full-stack web app dengan server-side rendering (EJS) dan <strong>Chat Bot berbasis Gemini API</strong> untuk menjawab pertanyaan hunian.
+                            <br>
+                            <strong>Dampak (Estimasi):</strong> Menjamin <strong>100% Akurasi Data Unit Tersedia</strong> dan mengurangi workload administratif/pertanyaan berulang hingga <strong>40%</strong> berkat AI Chatbot.
+                        </p>
+                        <!-- Tombol Aksi: Link ke Kode dan Link ke Demo Live -->
+                        <div class="flex space-x-3 mt-4">
+                             <a href="https://github.com/Tagia-CT/Tugas-SIC" target="_blank" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold py-2 rounded transition duration-300 text-center">
+                                <i class="fab fa-github mr-1"></i> Lihat Kode
+                            </a>
+                            <!-- Tombol Demo Live Dihilangkan karena tidak ada Demo Live -->
+                        </div>
+                    </div>
+                </div>
+                
+
+
+            </div>
+        </section>
+
+        <!-- 6. Kategori Proyek 2: AI & Data Science (Emerald/Hijau) -->
+        <section id="projects-ai" class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h3 class="text-3xl font-bold text-emerald-400 mb-4 flex items-center">
+                    <i class="fas fa-chart-line mr-3"></i> 
+                    2. AI & Data Science
+                </h3>
+                <p class="text-gray-400 mb-8">
+                    Studi kasus dan implementasi Machine Learning yang mengubah data mentah menjadi keputusan bisnis yang cerdas. (Scroll ke kanan)
+                </p>
+            </div>
+
+            <!-- Horizontal Scroll Container -->
+            <div class="horizontal-scroll-container space-x-6">
+                <!-- Card AI 1: Deteksi Ekspresi Wajah (PROJECT FINAL) -->
+                <div class="project-card rounded-xl shadow-2xl border-t-4 border-emerald-500">
+                    <div class="media-preview rounded-t-xl bg-gray-800/80">
+                        <!-- LOKASI GAMBAR DETEKSI YOLO -->
+                        <img src="deteksi_ekspresi.png" onerror="this.onerror=null; this.src='https://placehold.co/320x180/0f172a/34d399?text=Preview%20Deteksi%20YOLOv8';" 
+                             alt="Preview Deteksi Ekspresi Wajah" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-semibold uppercase text-emerald-300 bg-emerald-900/50 px-2 py-1 rounded">Object Detection | Custom Data</span>
+                        <h4 class="text-xl font-bold text-white my-2">Deteksi Ekspresi Wajah (YOLOv8)</h4>
+                        <p class="text-sm text-gray-500 mb-2">
+                            Teknologi: <strong>Python</strong>, <strong>YOLOv8</strong>, <strong>TensorFlow/Keras</strong>
+                        </p>
+                        <p class="mb-4 project-description">
+                            <strong>Masalah:</strong> Membangun dasar Computer Vision dan menguji performa YOLOv8 pada custom small dataset yang memiliki tantangan data imbalance.
+                            <br>
+                            <strong>Solusi:</strong> Bertindak sebagai <strong>ML Engineer</strong> untuk mengatur pipeline training dan hyperparameter tuning, memastikan kualitas anotasi (bounding box) yang konsisten. Memilih YOLOv8 karena <strong>kecepatan inferensi yang lebih baik</strong> untuk aplikasi real-time.
+                            <br>
+                            <strong>Dampak (Metrik):</strong> Model awal mencapai <strong>85% mAP (mean Average Precision)</strong> pada validation set, membuktikan metodologi yang kuat untuk proyek YOLO masa depan.
+                        </p>
+                        <a href="https://github.com/Tagia-CT/Sistem-Diteksi-Ekpersi-berbasi-Yolo8" target="_blank" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold py-2 rounded transition duration-300 text-center">
+                            <i class="fab fa-github mr-1"></i> Lihat Kode
+                        </a>
+                    </div>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- 7. Kategori Proyek 3: Game & Creative Logic (Pink/Magenta) -->
+        <section id="projects-game" class="py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h3 class="text-3xl font-bold text-pink-400 mb-4 flex items-center">
+                    <i class="fas fa-gamepad mr-3"></i> 
+                    3. Game & Creative Logic
+                </h3>
+                <p class="text-gray-400 mb-8">
+                    Showcase kreativitas, logika pemrograman kompleks, dan implementasi algoritma. (Scroll ke kanan)
+                </p>
+            </div>
+
+            <!-- Horizontal Scroll Container -->
+            <div class="horizontal-scroll-container space-x-6">
+                <!-- CARD GAME 1: DEARMASTER (PROJECT FINAL) -->
+                <div class="project-card rounded-xl shadow-2xl border-t-4 border-pink-500">
+                    <div class="media-preview rounded-t-xl bg-gray-800/80">
+                        <!-- LOKASI GAMBAR DEAR MASTER -->
+                        <img src="dearmaster.png" onerror="this.onerror=null; this.src='https://placehold.co/320x180/0f172a/f472b6?text=Preview%20Game%20DearMaster';" 
+                             alt="Preview Game DearMaster" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-semibold uppercase text-pink-300 bg-pink-900/50 px-2 py-1 rounded">Stealth Game | Logic Design</span>
+                        <h4 class="text-xl font-bold text-white my-2">DearMaster: Logic-Based Stealth Game</h4>
+                        <p class="text-sm text-gray-500 mb-2">
+                            Teknologi: <strong>Unity Engine</strong>, <strong>C# (OOP)</strong>, <strong>FSM</strong>
+                        </p>
+                        <p class="mb-4 project-description">
+                            <strong>Masalah:</strong> Menciptakan pengalaman stealth yang menantang melalui desain NPC lawan yang cerdas dan sulit diprediksi.
+                            <br>
+                            <strong>Solusi:</strong> Dibuat <strong>Solo</strong>. Mengimplementasikan <strong>Finite State Machine (FSM)</strong> untuk mengontrol perilaku NPC (Patroli, Waspada, Kejar). Menggunakan prinsip <strong>Inheritance</strong> (OOP) untuk mendefinisikan tipe penjaga yang berbeda secara efisien.
+                            <br>
+                            <strong>Dampak:</strong> Proyek ini membuktikan kemampuan <strong>System Logic Design</strong> dan penguasaan <strong>C# OOP</strong> yang ketat, kunci untuk manajemen codebase besar dan kompleks.
+                        </p>
+                        <!-- Tombol Aksi: Link ke Kode dan Link ke Demo/Build -->
+                        <div class="flex space-x-3 mt-4">
+                            <a href="https://github.com/Tagia-CT/DearMaster" target="_blank" class="flex-1 bg-pink-600 hover:bg-pink-500 text-white text-sm font-semibold py-2 rounded transition duration-300 text-center">
+                                <i class="fab fa-github mr-1"></i> Lihat Kode
+                            </a>
+                            <a href="https://github.com/Tagia-CT/DearMaster/releases/tag/2.0" target="_blank" class="flex-1 bg-gray-600 hover:bg-gray-500 text-white text-sm font-semibold py-2 rounded transition duration-300 text-center">
+                                <i class="fas fa-gamepad mr-1"></i> Mainkan Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD GAME 2: ETERNAL OASIS (BARU) -->
+                <div class="project-card rounded-xl shadow-2xl border-t-4 border-pink-500">
+                    <div class="media-preview rounded-t-xl bg-gray-800/80">
+                        <!-- LOKASI GAMBAR ETERNAL OASIS -->
+                        <img src="eternal_oasis.png" onerror="this.onerror=null; this.src='https://placehold.co/320x180/0f172a/f472b6?text=Preview%20Eternal%20Oasis%20RPG';" 
+                             alt="Preview Game Eternal Oasis" 
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-semibold uppercase text-pink-300 bg-pink-900/50 px-2 py-1 rounded">Visual Novel | Tactical RPG System</span>
+                        <h4 class="text-xl font-bold text-white my-2">Eternal Oasis: DnD-style Tactical System</h4>
+                        <p class="text-sm text-gray-500 mb-2">
+                            Teknologi: <strong>Unity Engine</strong>, <strong>C# (OOP)</strong>, <strong>Dice Mechanics (D20)</strong>
+                        </p>
+                        <p class="mb-4 project-description">
+                            <strong>Masalah:</strong> Membuat sistem pertarungan Turn-based yang kompleks dan adil, meniru mekanisme Dice Roll (D20), Armor Class (AC), dan perhitungan jarak ala DnD.
+                            <br>
+                            <strong>Solusi:</strong> Merancang <strong>system core</strong> di <strong>C#</strong> untuk mengelola TurnManager, HP/AC Modifiers, Skill Cooldowns, dan proses Hit Calculation (D20 vs AC). Mengimplementasikan Game Flow multi-mode (Exploration, VN, Battle).
+                            <br>
+                            <strong>Dampak:</strong> Proyek ini adalah bukti kemampuan <strong>System Modeling</strong> ekstrem dalam mensimulasikan probabilitas, mengelola state permainan yang rumit, dan codebase C# yang sangat terstruktur.
+                        </p>
+                        <!-- Tombol Aksi: Link ke Kode dan Link ke Demo/Build -->
+                        <div class="flex space-x-3 mt-4">
+                            <a href="https://github.com/Tagia-CT/Eternal-Oasis" target="_blank" class="flex-1 bg-pink-600 hover:bg-pink-500 text-white text-sm font-semibold py-2 rounded transition duration-300 text-center">
+                                <i class="fab fa-github mr-1"></i> Lihat Kode
+                            </a>
+                            <a href="https://github.com/Tagia-CT/Eternal-Oasis/releases/tag/4.5" target="_blank" class="flex-1 bg-gray-600 hover:bg-gray-500 text-white text-sm font-semibold py-2 rounded transition duration-300 text-center">
+                                <i class="fas fa-gamepad mr-1"></i> Mainkan Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 8. Bagian Pendidikan & Pengalaman (Timeline Sederhana) -->
+        <section id="experience" class="py-16 bg-gray-800 rounded-2xl shadow-2xl mb-16 px-8 sm:px-12 border-t border-gray-700">
+            <h3 class="text-3xl font-bold text-white mb-10 border-l-4 border-indigo-400 pl-3">
+                Riwayat Pendidikan & Pengalaman
+            </h3>
+            
+            <!-- Timeline Item 1: Pendidikan -->
+            <div class="mb-8 border-l-4 border-indigo-500 pl-6 relative">
+                <span class="absolute -left-3 top-1 bg-indigo-500 w-6 h-6 rounded-full flex items-center justify-center text-white font-bold text-xs"><i class="fas fa-graduation-cap"></i></span>
+                <p class="text-gray-400 text-sm">2023 – Sekarang</p>
+                <h4 class="text-xl font-bold text-white">Sistem Informasi, Universitas Katolik Atma Jaya</h4>
+                <p class="text-gray-300 mt-1">Fokus Studi: Pengembangan Perangkat Lunak dan Pengembangan Mobile. IPK: 3.90 / 4.00.</p>
+            </div>
+
+            <!-- Timeline Item 2: Pengalaman (Student Worker) -->
+            <div class="mb-8 border-l-4 border-emerald-500 pl-6 relative">
+                <span class="absolute -left-3 top-1 bg-emerald-500 w-6 h-6 rounded-full flex items-center justify-center text-white font-bold text-xs"><i class="fas fa-briefcase"></i></span>
+                <p class="text-gray-400 text-sm">Mei 2025 – Juni 2025</p>
+                <h4 class="text-xl font-bold text-white">Student Worker, LPPM (Lembaga Penelitian & Pengabdian Masyarakat)</h4>
+                <p class="text-gray-300 mt-1">Mengelola dan memperbarui database profil online (~40 anggota fakultas) menggunakan CMS. Mengatasi isu front-end (HTML) untuk memastikan visualisasi data profil dan foto yang akurat. Proyek selesai lebih cepat dari jadwal.</p>
+            </div>
+            
+             <!-- Timeline Item 3: Organisasi (Ketua) -->
+            <div class="mb-0 border-l-4 border-pink-500 pl-6 relative">
+                <span class="absolute -left-3 top-1 bg-pink-500 w-6 h-6 rounded-full flex items-center justify-center text-white font-bold text-xs"><i class="fas fa-users"></i></span>
+                <p class="text-gray-400 text-sm">2025 – 2026</p>
+                <h4 class="text-xl font-bold text-white">Ketua Himpunan (Chairman) - Himpunan Mahasiswa Sistem Informasi (HMSI)</h4>
+                <p class="text-gray-300 mt-1">Bertanggung jawab langsung atas manajemen keseluruhan dan monitoring strategis seluruh anggota dan aktivitas HMSI. Memimpin fungsi organisasi dan koordinasi antar divisi.</p>
+            </div>
+
+        </section>
+        
+        <!-- 9. Bagian Kontak -->
+        <section id="contact" class="py-16 text-center mb-10">
+            <div class="bg-gray-800 text-white p-10 rounded-2xl max-w-4xl mx-auto shadow-2xl border border-gray-700">
+                <h3 class="text-3xl font-bold mb-4 text-white">
+                    Tertarik dengan Portofolio & Proyek Saya?
+                </h3>
+                <p class="text-lg text-gray-400 mb-8">
+                    Mari terhubung dan berdiskusi lebih lanjut tentang bagaimana saya bisa memberikan nilai di tim Anda.
+                </p>
+                <a href="mailto:anggia.ct@gmail.com" class="bg-gradient-neon hover:opacity-90 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 inline-flex items-center">
+                    Kirim Email Sekarang
+                </a>
+                <div class="mt-8 flex justify-center space-x-6">
+                    <a href="https://www.linkedin.com/in/tawarikh-ac" target="_blank" class="text-gray-400 hover:text-indigo-400 transition duration-300"><i class="fab fa-linkedin fa-2x"></i></a>
+                    <a href="https://github.com/Tagia-CT" target="_blank" class="text-gray-400 hover:text-indigo-400 transition duration-300"><i class="fab fa-github fa-2x"></i></a>
+                    <a href="https://www.instagram.com/tagia_ct" target="_blank" class="text-gray-400 hover:text-indigo-400 transition duration-300"><i class="fab fa-instagram fa-2x"></i></a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-6 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto text-center text-sm px-4">
+            <p class="text-gray-400">&copy; 2025 T.A.C. Portofolio Sistem Informasi.</p>
         </div>
-        
-        <h2>Data Diri Singkat</h2>
-        <ul class="data-list">
-            <li><strong>Nama:</strong> Tawarikh Anggia</li>
-            <li><strong>Sekolah/Institusi:</strong> Atma Jaya Jakarta</li>
-            <li><strong>Status:</strong> Mahasiswa/Pelajar Latihan Web Deployment</li>
-            <li><strong>Tujuan Latihan:</strong> Memahami proses deployment dasar</li>
-        </ul>
+    </footer>
 
-        <h2>Data Lainnya</h2>
-        <p>Info tambahan.</p>
-        
-        <ul class="data-list">
-            <li><strong>Hobi:</strong> Membaca</li>
-            <li><strong>Mata Kuliah Favorit:</strong> Sistem Pendukung Keputusan</li>
-            <li><strong>Proyek Pertama:</strong> Laman ini!</li>
-            </ul>
-        
-        <footer>
-            <p style="text-align: center; font-size: 0.8em; color: #777;">&copy; 2025 Latihan Deployment Tawarikh Anggia</p>
-        </footer>
-    </div>
-
+    <!-- Script JavaScript untuk smooth scrolling -->
+    <script>
+        // Script untuk smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
